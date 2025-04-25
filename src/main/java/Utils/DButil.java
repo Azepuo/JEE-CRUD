@@ -7,7 +7,6 @@ public class DButil {
 	        "jdbc:mysql://localhost:3306/clients?useSSL=false&serverTimezone=UTC";
 	    private static final String USER = "root";
 	    private static final String PASS = "";
-
 	    static {
 	        try {
 	            Class.forName("com.mysql.cj.jdbc.Driver");

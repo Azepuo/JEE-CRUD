@@ -74,5 +74,27 @@ public class ClientDAO {
             ps.executeUpdate();
         }
     }
+    public List<Client> rechercherClients(String motCle) throws SQLException {
+        List<Client> liste = new ArrayList<>();
+        String sql = "SELECT * FROM client WHERE nom LIKE ? OR email LIKE ?";
+        try (Connection c = DButil.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            String pattern = "%" + motCle + "%";
+            ps.setString(1, pattern);
+            ps.setString(2, pattern);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Client cli = new Client();
+                    cli.setId(rs.getInt("id"));
+                    cli.setNom(rs.getString("nom"));
+                    cli.setEmail(rs.getString("email"));
+                    cli.setTelephone(rs.getString("telephone"));
+                    liste.add(cli);
+                }
+            }
+        }
+        return liste;
+    }
+
 
 }

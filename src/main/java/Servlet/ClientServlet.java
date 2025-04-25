@@ -37,7 +37,13 @@ public class ClientServlet extends HttpServlet {
             } else if ("delete".equals(action)) {
                 dao.supprimerClient(Integer.parseInt(req.getParameter("id")));
                 resp.sendRedirect("clients");
-            } else {
+            }else if("search".equals(action)) {
+                String motCle = req.getParameter("query");
+                List<Client> list = dao.rechercherClients(motCle);
+                req.setAttribute("listeClients", list);
+                req.setAttribute("query", motCle);
+                req.getRequestDispatcher("list-clients.jsp").forward(req, resp);}
+            else {
                 List<Client> list = dao.listerClients();
                 req.setAttribute("listeClients", list);
                 req.getRequestDispatcher("list-clients.jsp").forward(req, resp);
